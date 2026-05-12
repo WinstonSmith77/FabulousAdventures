@@ -3,18 +3,29 @@
 void Main()
 {
 	Console.WriteLine("An immutable queue");
-	var qs = new List<IImQueue<int>> {ImQueue<int>.Empty} ;
+	var qs = new List<IImQueue<int>> { ImQueue<int>.Empty };
 
 	var current = qs.First();
-	
-	foreach (var element in Enumerable.Range(0, 10))
+
+	foreach (var element in Enumerable.Range(0, 3))
 	{
 		current = current.Enqueue(element);
 		qs.Add(current);
 	}
-	
+
+	foreach (var q in qs)
+	{
+		var q_ = q;
+		while (!q_.IsEmpty)
+		{
+			q_.Peek().Dump();
+			q_ = q_.Dequeue();
+		}
+		" ".Dump();
+	}
+
 	qs.Dump();
-	
+
 
 }
 

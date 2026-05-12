@@ -2,7 +2,23 @@
 
 void Main()
 {
-	CovImmutableStack.SampleCode();
+	("A covariant immutable stack").Dump();
+
+	// By making Push a static method of the class and
+	// adding an extension method to maintain our fluent user
+	// interface, we can create a covariant version of the 
+	// immutable stack.
+
+	IImStack<Tiger> s1 = ImStack<Tiger>.Empty;
+	IImStack<Tiger> s2 = s1.Push(new Tiger());
+	IImStack<Tiger> s3 = s2.Push(new Tiger());
+	IImStack<Animal> s4 = s3; // Legal because of covariance.
+	IImStack<Animal> s5 = s4.Push(new Giraffe());
+	
+	
+	Enumerable.SequenceEqual(s3, s4).Dump();
+
+	s5.Bracket().Dump();
 }
 
 
@@ -46,26 +62,7 @@ static class Extensions
 }
 
 
-	static class CovImmutableStack
-	{
-		public static void SampleCode()
-		{
-			Console.WriteLine("A covariant immutable stack");
 
-			// By making Push a static method of the class and
-			// adding an extension method to maintain our fluent user
-			// interface, we can create a covariant version of the 
-			// immutable stack.
-
-			IImStack<Tiger> s1 = ImStack<Tiger>.Empty;
-			IImStack<Tiger> s2 = s1.Push(new Tiger());
-			IImStack<Tiger> s3 = s2.Push(new Tiger());
-			IImStack<Animal> s4 = s3; // Legal because of covariance.
-			IImStack<Animal> s5 = s4.Push(new Giraffe());
-
-			s5.Bracket().Dump();
-		}
-	}
 
 	class Animal
 	{
